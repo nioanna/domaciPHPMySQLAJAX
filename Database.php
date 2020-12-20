@@ -74,9 +74,9 @@ return true;
 else return false;
 }
 //DELETE funkcija
-function delete ($table,  $keys, $values)
+function delete ($table,  $id, $idName)
 {
-$delete = "DELETE FROM ".$table." WHERE ".$keys[0]." = '".$values[0]."'";
+$delete = "DELETE FROM ".$table." WHERE ".$idName." = ".$id;
 //echo $delete;
 if ($this->ExecuteQuery($delete))
 return true;

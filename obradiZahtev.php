@@ -25,5 +25,14 @@ include "Database.php";
             $_POST = array();
             exit();
         }
+    }elseif(isset($_GET["delete"])){
+        $q = intval($_GET['delete']);
+        $idName = "idUtakmice";
+        if($mydb->delete("utakmica", $q,$idName)){
+            echo "Uspesno izmenjena utakmica!";
+        }else{
+             echo "Doslo je do greske!";
+        }
+
     }
     ?>

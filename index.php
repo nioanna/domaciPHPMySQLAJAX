@@ -41,8 +41,8 @@ include("obradiZahtev.php");
             </div>
         </div>
         <!-- deo da se dodaje nova utakmica -->
-        <div class="container" id="dodaj_utakmicu" >
-            <form method = "POST">
+        <div class="container" id="dodaj_utakmicu">
+            <form method="POST">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="domaciTim">DomaciTim:</label>
@@ -95,7 +95,7 @@ include("obradiZahtev.php");
                     </div>
                     <div class="col-sm-4">
                         <label for="datum">Datum:</label>
-                        <input type="date"  name="datum" id="datum" value="Y-m-d">
+                        <input type="date" name="datum" id="datum" value="Y-m-d">
                     </div>
                 </div>
                 <div class="row">
@@ -109,64 +109,75 @@ include("obradiZahtev.php");
     <!-- kraj dela da se unese nova utakmica -->
 
     <!-- deo sa tabelom prikaza -->
-    <div class="table-responsive" id="tbl">
-        <table class="table table-striped">
-            <thread>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Datum</th>
-                    <th scope="col">Domaci Tim</th>
-                    <th scope="col">Gostujuci Tim</th>
-                    <th scope="col">Rezultat</th>
-                    <th scope="col">Grad</th>
-                    <th scope="col">Liga</th>
-                    <th scope="col">Promena</th>
-                </tr>
-                <tbody>
-                    <?php
-                    $mydb2 = new Database("utakmice");
-                    $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga");
-                    $rb = 0;
-                    while ($red = $mydb->getResult()->fetch_object()) :
-                    ?>
-                        <tr>
-                            <th scope="row" value="<?php echo $red->idUtakmice; ?>"><?php echo ++$rb; ?></th>
-                            <td><?php echo $red->datumIVreme; ?></td>
-                            <td value="<?php echo $red->idDomacegTIma; ?>"><?php
-                                                                            $mydb2->select("tim", "*", null, null, null, "idTima=$red->idDomacegTIma");
-                                                                            echo $mydb2->getResult()->fetch_object()->nazivTima;
-                                                                            ?></td>
-                            <td value="<?php echo $red->idGostujucegTima; ?>"><?php
-                                                                                $mydb2->select("tim", "*", null, null, null, "idTima=$red->idGostujucegTima");
+    <form id="tabela">
+        <div class="table-responsive" id="tbl">
+            <table class="table table-striped">
+                <thread>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Domaci Tim</th>
+                        <th scope="col">Gostujuci Tim</th>
+                        <th scope="col">Rezultat</th>
+                        <th scope="col">Grad</th>
+                        <th scope="col">Liga</th>
+                        <th scope="col">Promena</th>
+                    </tr>
+                    <tbody>
+                        <?php
+                        $mydb2 = new Database("utakmice");
+                        $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga");
+                        $rb = 0;
+                        while ($red = $mydb->getResult()->fetch_object()) :
+                        ?>
+                            <tr>
+                                <th scope="row" value="<?php echo $red->idUtakmice; ?>"><?php echo ++$rb; ?></th>
+                                <td><?php echo $red->datumIVreme; ?></td>
+                                <td value="<?php echo $red->idDomacegTIma; ?>"><?php
+                                                                                $mydb2->select("tim", "*", null, null, null, "idTima=$red->idDomacegTIma");
                                                                                 echo $mydb2->getResult()->fetch_object()->nazivTima;
                                                                                 ?></td>
-                            <td><?php echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; ?></td>
-                            <td><?php echo $red->grad; ?> </td>
-                            <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
-                            <td value="<?php echo $red->idUtakmice; ?>"><button type="submit" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
-                                <input type="submit" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="Izbrisi"></td>
+                                <td value="<?php echo $red->idGostujucegTima; ?>"><?php
+                                                                                    $mydb2->select("tim", "*", null, null, null, "idTima=$red->idGostujucegTima");
+                                                                                    echo $mydb2->getResult()->fetch_object()->nazivTima;
+                                                                                    ?></td>
+                                <td><?php echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; ?></td>
+                                <td><?php echo $red->grad; ?> </td>
+                                <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
+                                <td value="<?php echo $red->idUtakmice; ?>"><button type="button" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
+                                    <button type="button" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button></td>
 
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </thread>
-        </table>
-    </div>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </thread>
+            </table>
+
+        </div>
+    </form>
     <!-- kraj dela sa tabelom -->
+    <!-- forma za upit brisanja -->
+    <div class="del" id="del" >
+        <form id="delForm" class="form-container" method="GET">
+            <h2> Da li zelite da izbrisete utakmicu?</h2>
+            <button type="submit" id="delete" name="delete" value="">Da</button>
+            <button type="reset"> Ne</button>
+        </form>
+    </div>
+    <!-- kraj forme sa upitom -->
 
 </body>
 
 </html>
 <script>
-
     function skloniBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "none";
-        document.getElementById("izmeni").style.display="none";
+        document.getElementById("izmeni").style.display = "none";
+        document.getElementById("del").style.display="none";
     }
-skloniBlok();
+    skloniBlok();
     $("button[id=dodajUtakmicu]").on("click", prikaziBlok);
     $("button[id=ponistiUnos]").on("click", skloniBlok);
-
     function prikaziBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "block";
     }
@@ -196,16 +207,22 @@ skloniBlok();
         xmlhttp.open("GET", "pretraga.php?q=" + search, true);
         xmlhttp.send();
     }
-    function izmeniUtakmicu(izmena) {      
+
+    function izmeniUtakmicu(izmena) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("dodaj_utakmicu").style.display = "block";             
+                document.getElementById("dodaj_utakmicu").style.display = "block";
                 document.getElementById("dodaj_utakmicu").innerHTML = this.responseText;
             }
         }
         xmlhttp.open("GET", "izmena.php?q=" + izmena, true);
         xmlhttp.send();
 
+    }
+
+    function izbrisiUtakmicu(izbrisati) {
+        document.getElementById("del").style.display = "block";
+        document.getElementById("delete").value=izbrisati;
     }
 </script>
