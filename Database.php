@@ -58,16 +58,17 @@ return true;
 else return false;
 }
 //UPDATE funkcija
-function update ($table, $id, $keys, $values)
+function update ($table, $id, $keys, $values,$nameId)
 {
 $set_query = array();
 for ($i=0; $i<sizeof($keys);$i++){
-	$set_query[] = $keys[$i] . " = '".$values[$i]."'";
+	$set_query[] = $keys[$i] . " = ".$values[$keys[$i]];
 	}
 	$set_query_string = implode(',',$set_query);
 
 
-$update = "UPDATE ".$table." SET ". $set_query_string ." WHERE id=". $id;
+$update = "UPDATE ".$table." SET ". $set_query_string ." WHERE ".$nameId."=". $id.";";
+//echo $update;
 if (($this->ExecuteQuery($update)) && ($this->affected >0))
 return true;
 else return false;
