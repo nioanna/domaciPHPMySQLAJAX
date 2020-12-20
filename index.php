@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 </head>
 <?php
-include("obrada.php");
+include("obradiZahtev.php");
 ?>
 
 <body>
@@ -38,12 +38,11 @@ include("obrada.php");
             <div class="col-sm-4">
                 <label>Pretraga</label>
                 <input type="text" onkeyup="showResult(this.value)">
-                <img src="/img/sort.png" alt="sort" style="width: auto;">
             </div>
         </div>
         <!-- deo da se dodaje nova utakmica -->
-        <div class="container" id="dodaj_utakmicu">
-            <form action="obradiZahtev.php" method="post">
+        <div class="container" id="dodaj_utakmicu" >
+            <form method = "POST">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="domaciTim">DomaciTim:</label>
@@ -101,6 +100,7 @@ include("obrada.php");
                 </div>
                 <div class="row">
                     <input type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj">
+                    <input type="submit" name="izmeni" id="izmeni" value="Izmeni" style="display: none;">
                     <button type="reset" name="ponistiUnos" id="ponistiUnos">Ponisti</button>
                 </div>
             </form>
@@ -109,7 +109,6 @@ include("obrada.php");
     <!-- kraj dela da se unese nova utakmica -->
 
     <!-- deo sa tabelom prikaza -->
-    <form action="izmeniIzbrisi.php" method="POST">
     <div class="table-responsive" id="tbl">
         <table class="table table-striped">
             <thread>
@@ -144,8 +143,8 @@ include("obrada.php");
                             <td><?php echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; ?></td>
                             <td><?php echo $red->grad; ?> </td>
                             <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
-                            <td><input type="submit" name="izmeni" id="izmeni" value="Izmeni">
-                                <input type="submit" name="izbrisi" id="izbrisi" value="Izbrisi"></td>
+                            <td value="<?php echo $red->idUtakmice; ?>"><button type="submit" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
+                                <input type="submit" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="Izbrisi"></td>
 
                         </tr>
                     <?php endwhile; ?>
@@ -153,17 +152,18 @@ include("obrada.php");
             </thread>
         </table>
     </div>
-    </form>
     <!-- kraj dela sa tabelom -->
 
 </body>
 
 </html>
 <script>
+
     function skloniBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "none";
+        document.getElementById("izmeni").style.display="none";
     }
-    skloniBlok();
+skloniBlok();
     $("button[id=dodajUtakmicu]").on("click", prikaziBlok);
     $("button[id=ponistiUnos]").on("click", skloniBlok);
 
@@ -195,5 +195,17 @@ include("obrada.php");
         }
         xmlhttp.open("GET", "pretraga.php?q=" + search, true);
         xmlhttp.send();
+    }
+    function izmeniUtakmicu(izmena) {      
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("dodaj_utakmicu").style.display = "block";             
+                document.getElementById("dodaj_utakmicu").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "izmena.php?q=" + izmena, true);
+        xmlhttp.send();
+
     }
 </script>
