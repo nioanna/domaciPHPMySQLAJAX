@@ -19,14 +19,13 @@ include("obradiZahtev.php");
     <div class="container">
         <h1> Rezulati Utakmica </h1>
     </div>
+    <div class="row justify-content-md-center">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <button type="submit" name="dodajUtakmicu" id="dodajUtakmicu"> dodaj novu utakmicu</button>
-            </div>
-            <div class="col-sm-4">
+        <form class="form-inline">
+            <button class="btn btn-primary btn-lg" type="button" name="dodajUtakmicu" id="dodajUtakmicu"> Dodaj novu utakmicu</button>
+            <div class="form-group">
                 <label for="liga-select">Liga:</label>
-                <select name="liga-select" id="liga-select" onchange="showTable(this.value)">
+                <select class="form-control" name="liga-select" id="liga-select" onchange="showTable(this.value)">
                     <?php
                     $mydb->select("liga", "*", null, null, null);
                     while ($red = $mydb->getResult()->fetch_object()) :
@@ -35,129 +34,137 @@ include("obradiZahtev.php");
                     <?php endwhile; ?>
                 </select>
             </div>
-            <div class="col-sm-4">
-                <label>Pretraga</label>
-                <input type="text" onkeyup="showResult(this.value)">
+            <div class="form-group">
+                <label for="pretragaG">Pretraga:</label>
+                <input type="text" name="pretragaG" id="pretragaG" class="form-control" placeholder="Unesite pretragu" onkeyup="showResult(this.value)">
             </div>
-        </div>
-        <!-- deo da se dodaje nova utakmica -->
-        <div class="container" id="dodaj_utakmicu">
-            <form method="POST">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label for="domaciTim">DomaciTim:</label>
-                        <select name="domaciTim" id="domaciTim">
-                            <?php
-                            $mydb->select("tim", "*", null, null, null);
-                            while ($red = $mydb->getResult()->fetch_object()) :
-                            ?>
-                                <option value="<?php echo $red->idTima; ?>"><?php echo $red->nazivTima; ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="gostujuciTim">GostujuciTim:</label>
-                        <select name="gostujuciTim" id="gostujuciTim">
-                            <?php
-                            $mydb->select("tim", "*", null, null, null);
-                            while ($red = $mydb->getResult()->fetch_object()) :
-                            ?>
-                                <option value="<?php echo $red->idTima; ?>"><?php echo $red->nazivTima; ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
+        </form>
+    </div>
+    </div>
+    <!-- deo da se dodaje nova utakmica -->
+    <div class="container" id="dodaj_utakmicu">
+        <form method="POST">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="domaciTim">DomaciTim:</label>
+                    <select class="form-control" name="domaciTim" id="domaciTim">
+                        <?php
+                        $mydb->select("tim", "*", null, null, null);
+                        while ($red = $mydb->getResult()->fetch_object()) :
+                        ?>
+                            <option value="<?php echo $red->idTima; ?>"><?php echo $red->nazivTima; ?></option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label for="brGolDom">Broj golova domaceg tima:</label>
-                        <input type="text" name="brGolDom" id="brGolDom">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="brGolGost">Broj golova gostujuceg tima:</label>
-                        <input type="text" name="brGolGost" id="brGolGost">
-                    </div>
+                <div class="col-sm-6">
+                    <label for="gostujuciTim">GostujuciTim:</label>
+                    <select class="form-control" name="gostujuciTim" id="gostujuciTim">
+                        <?php
+                        $mydb->select("tim", "*", null, null, null);
+                        while ($red = $mydb->getResult()->fetch_object()) :
+                        ?>
+                            <option value="<?php echo $red->idTima; ?>"><?php echo $red->nazivTima; ?></option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label for="grad">Grad:</label>
-                        <input type="text" name="grad" id="grad">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="lig2"> Liga: </label>
-                        <select name="liga-select" id="liga-select">
-                            <?php
-                            $mydb->select("liga", "*", null, null, null);
-                            while ($red = $mydb->getResult()->fetch_object()) :
-                            ?>
-                                <option value="<?php echo $red->idLiga; ?>"><?php echo $red->nazivLige; ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="datum">Datum:</label>
-                        <input type="date" name="datum" id="datum" value="Y-m-d">
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="brGolDom">Broj golova domaceg tima:</label>
+                    <input class="form-control" type="text" name="brGolDom" id="brGolDom">
                 </div>
-                <div class="row">
-                    <input type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj">
-                    <input type="submit" name="izmeni" id="izmeni" value="Izmeni" style="display: none;">
-                    <button type="reset" name="ponistiUnos" id="ponistiUnos">Ponisti</button>
+                <div class="col-sm-6">
+                    <label for="brGolGost">Broj golova gostujuceg tima:</label>
+                    <input class="form-control" type="text" name="brGolGost" id="brGolGost">
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="grad">Grad:</label>
+                    <input class="form-control" type="text" name="grad" id="grad">
+                </div>
+                <div class="col-sm-4">
+                    <label for="lig2"> Liga: </label>
+                    <select class="form-control" name="liga-select" id="liga-select">
+                        <?php
+                        $mydb->select("liga", "*", null, null, null);
+                        while ($red = $mydb->getResult()->fetch_object()) :
+                        ?>
+                            <option value="<?php echo $red->idLiga; ?>"><?php echo $red->nazivLige; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="datum">Datum:</label>
+                    <input class="form-control" type="date" name="datum" id="datum" value="Y-m-d">
+                </div>
+            </div>
+            <div class="row" style="justify-content:flex-end;">
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj">
+                    <input class="btn btn-success" type="submit" name="izmeni" id="izmeni" value="Izmeni" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger" type="reset" name="ponistiUnos" id="ponistiUnos">Ponisti</button>
+                </div>
+            </div>
+        </form>
+    </div>
     </div>
     <!-- kraj dela da se unese nova utakmica -->
 
     <!-- deo sa tabelom prikaza -->
-    <form id="tabela">
-        <div class="table-responsive" id="tbl">
-            <table class="table table-striped">
-                <thread>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Datum</th>
-                        <th scope="col">Domaci Tim</th>
-                        <th scope="col">Gostujuci Tim</th>
-                        <th scope="col">Rezultat</th>
-                        <th scope="col">Grad</th>
-                        <th scope="col">Liga</th>
-                        <th scope="col">Promena</th>
-                    </tr>
-                    <tbody>
-                        <?php
-                        $mydb2 = new Database("utakmice");
-                        $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga");
-                        $rb = 0;
-                        while ($red = $mydb->getResult()->fetch_object()) :
-                        ?>
-                            <tr>
-                                <th scope="row" value="<?php echo $red->idUtakmice; ?>"><?php echo ++$rb; ?></th>
-                                <td><?php echo $red->datumIVreme; ?></td>
-                                <td value="<?php echo $red->idDomacegTIma; ?>"><?php
-                                                                                $mydb2->select("tim", "*", null, null, null, "idTima=$red->idDomacegTIma");
-                                                                                echo $mydb2->getResult()->fetch_object()->nazivTima;
-                                                                                ?></td>
-                                <td value="<?php echo $red->idGostujucegTima; ?>"><?php
-                                                                                    $mydb2->select("tim", "*", null, null, null, "idTima=$red->idGostujucegTima");
+    <div class="container-fluid" id="tabelaD">
+        <form id="tabela">
+            <div class="table-responsive" id="tbl">
+                <table class="table table-striped">
+                    <thread>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Domaci Tim</th>
+                            <th scope="col">Gostujuci Tim</th>
+                            <th scope="col">Rezultat</th>
+                            <th scope="col">Grad</th>
+                            <th scope="col">Liga</th>
+                            <th scope="col">Promena</th>
+                        </tr>
+                        <tbody>
+                            <?php
+                            $mydb2 = new Database("utakmice");
+                            $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga");
+                            $rb = 0;
+                            while ($red = $mydb->getResult()->fetch_object()) :
+                            ?>
+                                <tr>
+                                    <th scope="row" value="<?php echo $red->idUtakmice; ?>"><?php echo ++$rb; ?></th>
+                                    <td><?php echo $red->datumIVreme; ?></td>
+                                    <td value="<?php echo $red->idDomacegTIma; ?>"><?php
+                                                                                    $mydb2->select("tim", "*", null, null, null, "idTima=$red->idDomacegTIma");
                                                                                     echo $mydb2->getResult()->fetch_object()->nazivTima;
                                                                                     ?></td>
-                                <td><?php echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; ?></td>
-                                <td><?php echo $red->grad; ?> </td>
-                                <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
-                                <td value="<?php echo $red->idUtakmice; ?>"><button type="button" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
-                                    <button type="button" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button></td>
+                                    <td value="<?php echo $red->idGostujucegTima; ?>"><?php
+                                                                                        $mydb2->select("tim", "*", null, null, null, "idTima=$red->idGostujucegTima");
+                                                                                        echo $mydb2->getResult()->fetch_object()->nazivTima;
+                                                                                        ?></td>
+                                    <td><?php echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; ?></td>
+                                    <td><?php echo $red->grad; ?> </td>
+                                    <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
+                                    <td value="<?php echo $red->idUtakmice; ?>"><button class="btn btn-success" type="button" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
+                                        <button class="btn btn-danger" type="button" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button></td>
 
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </thread>
-            </table>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </thread>
+                </table>
 
-        </div>
-    </form>
+            </div>
+        </form>
+    </div>
     <!-- kraj dela sa tabelom -->
     <!-- forma za upit brisanja -->
-    <div class="del" id="del" >
+    <div class="del" id="del">
         <form id="delForm" class="form-container" method="GET">
             <h2> Da li zelite da izbrisete utakmicu?</h2>
             <button type="submit" id="delete" name="delete" value="">Da</button>
@@ -173,11 +180,12 @@ include("obradiZahtev.php");
     function skloniBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "none";
         document.getElementById("izmeni").style.display = "none";
-        document.getElementById("del").style.display="none";
+        document.getElementById("del").style.display = "none";
     }
     skloniBlok();
     $("button[id=dodajUtakmicu]").on("click", prikaziBlok);
     $("button[id=ponistiUnos]").on("click", skloniBlok);
+
     function prikaziBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "block";
     }
@@ -223,6 +231,6 @@ include("obradiZahtev.php");
 
     function izbrisiUtakmicu(izbrisati) {
         document.getElementById("del").style.display = "block";
-        document.getElementById("delete").value=izbrisati;
+        document.getElementById("delete").value = izbrisati;
     }
 </script>
