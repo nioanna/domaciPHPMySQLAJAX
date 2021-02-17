@@ -2,7 +2,7 @@
 include("Database.php");
 $q = strval($_GET['q']);
 $mydb = new Database("utakmice");
-$mydb->select("utakmica","*","tim","idDomacegTIma","idTima","tim.nazivTima LIKE '$q%'");
+$mydb->select("utakmica","*","tim","idDomacegTIma","idTima","tim.nazivTima LIKE '%$q%'");
 
 echo '<table class="table table-striped">
     <thread>
