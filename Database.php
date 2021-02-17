@@ -1,19 +1,21 @@
 <?php
 class Database
 {
+
+    
 private $hostname="localhost";
 private $username="root";
 private $password="";
 private $dbname;
 private $dblink; 
 private $result; 
-private $records;
 private $affected;
 function __construct($dbname)
 {
     $this->dbname = $dbname;
     $this->Connect();
 }
+
 function Connect()
 {
 $this->dblink = new mysqli($this->hostname, $this->username, $this->password, $this->dbname);
@@ -30,7 +32,7 @@ return $this->result;
 }
 
 //SELECT funkcija
-function select ($table, $rows, $join_table, $join_key1, $join_key2, $where = null, $order = null)
+function select ($table, $rows, $join_table, $join_key1, $join_key2, $where = null, $order=null)
 {
 $q = 'SELECT '.$rows.' FROM '.$table;  
 		if($join_table !=null)
@@ -38,8 +40,8 @@ $q = 'SELECT '.$rows.' FROM '.$table;
         if($where != null)  
             $q .= ' WHERE '.$where;  
         if($order != null)  
-            $q .= ' ORDER BY '.$order; 					
-$this->ExecuteQuery($q);
+            $q .= ' ORDER BY '.$order; 
+            $this->ExecuteQuery($q);
 //print_r($this->getResult()->fetch_object());
 }
 //INSERT funkcija 
@@ -52,7 +54,7 @@ $insert = 'INSERT INTO '.$table;
                 $insert .= ' ('.$rows.')';   
             }  
 			$insert .= ' VALUES ('.$query_values.')';
-			echo $insert;
+//			echo $insert;
 if ($this->ExecuteQuery($insert))
 return true;
 else return false;

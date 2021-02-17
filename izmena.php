@@ -108,12 +108,15 @@ echo date("Y-m-d", strtotime($dat));
 echo '">
     </div>
 </div>
-<div class="row">
+<div class="row style="justify-content:flex-end;>
+<div class="form-group">
     <input type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj" style="display: none;">
     <button class="btn btn-success" type="submit" name="izmeni" id="izmeni" value="';
 echo $q;
 echo '" style="display: block;">Izmeni</button>
-    <button class="btn btn-danger" type="reset" name="ponistiUnos" id="ponistiUnos">Ponisti</button>
+</div>
+                <div class="form-group">
+    <button class="btn btn-danger" type="reset" name="ponistiUnos" id="ponistiUnos" onclick="skloniBlok()">Ponisti</button>
+</div>
 </div>
 </form>';
-?>

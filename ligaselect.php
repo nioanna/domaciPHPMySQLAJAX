@@ -14,6 +14,7 @@ echo '<table class="table table-striped">
         <th scope="col">Rezultat</th>
         <th scope="col">Grad</th>
         <th scope="col">Liga</th>
+        <th scope="col">Promena</th>
     </tr>
     <tbody>';
         $mydb2 = new Database("utakmice");
@@ -33,6 +34,10 @@ echo '<table class="table table-striped">
                 <td>'; echo $red->brojGolovaDOmacegTIma . ':' . $red->brojGolovaGostujucegTIma; echo'</td>
                 <td>'; echo $red->grad; echo '</td>
                 <td value="'; echo $red->idLige; echo '">'; echo $red->nazivLige; echo '</td>
+                <td value="'; echo $red->idUtakmice; echo'"><button class="btn btn-success" type="button" name="izmeni" id="u'; echo $red->idUtakmice; echo'" value="'; echo $red->idUtakmice; echo'" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
+                                        
+                <button class="btn btn-danger" type="button" name="izbrisi" id="d'; echo $red->idUtakmice; echo '" value="'; echo $red->idUtakmice; echo'" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button>
+                </td>
 
             </tr>';
             endwhile;

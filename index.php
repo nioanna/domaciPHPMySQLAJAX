@@ -10,7 +10,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
 </head>
+
 <?php
 include("obradiZahtev.php");
 ?>
@@ -20,26 +22,26 @@ include("obradiZahtev.php");
         <h1> Rezulati Utakmica </h1>
     </div>
     <div class="row justify-content-md-center">
-    <div class="container">
-        <form class="form-inline">
-            <button class="btn btn-primary btn-lg" type="button" name="dodajUtakmicu" id="dodajUtakmicu"> Dodaj novu utakmicu</button>
-            <div class="form-group">
-                <label for="liga-select">Liga:</label>
-                <select class="form-control" name="liga-select" id="liga-select" onchange="showTable(this.value)">
-                    <?php
-                    $mydb->select("liga", "*", null, null, null);
-                    while ($red = $mydb->getResult()->fetch_object()) :
-                    ?>
-                        <option value="<?php echo $red->idLiga; ?>"><?php echo $red->nazivLige; ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="pretragaG">Pretraga:</label>
-                <input type="text" name="pretragaG" id="pretragaG" class="form-control" placeholder="Unesite pretragu" onkeyup="showResult(this.value)">
-            </div>
-        </form>
-    </div>
+        <div class="container">
+            <form class="form-inline" method="GET">
+                <button class="btn btn-primary btn-lg" type="button" name="dodajUtakmicu" id="dodajUtakmicu"> Dodaj novu utakmicu</button>
+                <div class="form-group">
+                    <label for="liga-select">Liga:</label>
+                    <select class="form-control" name="liga-select" id="liga-select" onchange="showTable(this.value)">
+                        <?php
+                        $mydb->select("liga", "*", null, null, null);
+                        while ($red = $mydb->getResult()->fetch_object()) :
+                        ?>
+                            <option value="<?php echo $red->idLiga; ?>"><?php echo $red->nazivLige; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pretragaG">Pretraga:</label>
+                    <input type="text" name="pretragaG" id="pretragaG" class="form-control" placeholder="Unesite pretragu" onkeyup="showResult(this.value)">
+                </div>
+            </form>
+        </div>
     </div>
     <!-- deo da se dodaje nova utakmica -->
     <div class="container" id="dodaj_utakmicu">
@@ -117,22 +119,22 @@ include("obradiZahtev.php");
     <div class="container-fluid" id="tabelaD">
         <form id="tabela">
             <div class="table-responsive" id="tbl">
-                <table class="table table-striped">
+                <table class="table table-striped" id="tbl1">
                     <thread>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Datum</th>
-                            <th scope="col">Domaci Tim</th>
-                            <th scope="col">Gostujuci Tim</th>
-                            <th scope="col">Rezultat</th>
-                            <th scope="col">Grad</th>
-                            <th scope="col">Liga</th>
-                            <th scope="col">Promena</th>
+                            <th  scope="col">#</th>
+                            <th  scope="col">Datum</th>
+                            <th  scope="col">Domaci Tim</th>
+                            <th  scope="col">Gostujuci Tim</th>
+                            <th  scope="col">Rezultat</th>
+                            <th  scope="col">Grad</th>
+                            <th  scope="col">Liga</th>
+                            <th  scope="col">Promena</th>
                         </tr>
                         <tbody>
                             <?php
                             $mydb2 = new Database("utakmice");
-                            $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga");
+                            $mydb->select("utakmica", "*", "liga", "idLiga", "idLiga",null,"datumIVreme DESC");
                             $rb = 0;
                             while ($red = $mydb->getResult()->fetch_object()) :
                             ?>
@@ -151,7 +153,9 @@ include("obradiZahtev.php");
                                     <td><?php echo $red->grad; ?> </td>
                                     <td value="<?php echo $red->idLige; ?>"><?php echo $red->nazivLige; ?></td>
                                     <td value="<?php echo $red->idUtakmice; ?>"><button class="btn btn-success" type="button" name="izmeni" id="u<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
-                                        <button class="btn btn-danger" type="button" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button></td>
+
+                                        <button class="btn btn-danger" type="button" name="izbrisi" id="d<?php echo $red->idUtakmice; ?>" value="<?php echo $red->idUtakmice; ?>" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button>
+                                    </td>
 
                                 </tr>
                             <?php endwhile; ?>
@@ -164,11 +168,32 @@ include("obradiZahtev.php");
     </div>
     <!-- kraj dela sa tabelom -->
     <!-- forma za upit brisanja -->
+    <!-- margin-left: window.I -->
+
     <div class="del" id="del">
-        <form id="delForm" class="form-container" method="GET">
+        <form id="delForm" class="form-container" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upozorenje!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Da li zelite da izbriste oznacenu utakmicu?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="delete" name="delete" value="">Da</button>
+                    <button type="reset" class="btn btn-secondary" id="ne" onchange="sakriBlok"> Ne</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="del">
+        <form id="delForm" class="form-container" method="POST">
             <h2> Da li zelite da izbrisete utakmicu?</h2>
             <button type="submit" id="delete" name="delete" value="">Da</button>
-            <button type="reset"> Ne</button>
+            <button type="reset" id="ne" onchange="sakriBlok"> Ne</button>
         </form>
     </div>
     <!-- kraj forme sa upitom -->
@@ -182,9 +207,12 @@ include("obradiZahtev.php");
         document.getElementById("izmeni").style.display = "none";
         document.getElementById("del").style.display = "none";
     }
-    skloniBlok();
+    console.log("Sklanjam blok");
+
+
     $("button[id=dodajUtakmicu]").on("click", prikaziBlok);
     $("button[id=ponistiUnos]").on("click", skloniBlok);
+    $("button[id=ne]").on("click", skloniBlok);
 
     function prikaziBlok() {
         document.getElementById("dodaj_utakmicu").style.display = "block";
@@ -230,7 +258,49 @@ include("obradiZahtev.php");
     }
 
     function izbrisiUtakmicu(izbrisati) {
+        console.log("Prikazujem blok");
         document.getElementById("del").style.display = "block";
         document.getElementById("delete").value = izbrisati;
+        console.log("Greska");
     }
+    function sort(n) {
+        var tbl, rows, switching, i,x,y,shouldSwitch,dir,switchcount=0;
+        tbl = document.getElementById("tbl1");
+        switching = true;
+        dir="asc";
+
+        while(switching) {
+            switching=false;
+            rows = tbl.rows;
+            for(i=1;i<(rows.length-1);i++) {
+                shouldSwitch = false;
+                x=rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if(dir=="asc"){
+                if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+                
+            }else if(dir="desc"){
+                if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+            if(shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i+1],rows[i]);
+            switching = true;
+            switchcount++;
+        } else{
+            if(switchcount ==0 && dir=="asc") {
+                dir = "desc";
+                switching=true;
+            }
+        }
+        }
+        
+    }
+
 </script>
