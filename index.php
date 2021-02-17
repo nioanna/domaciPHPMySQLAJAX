@@ -102,6 +102,9 @@ include("obradiZahtev.php");
                 </div>
             </div>
             <div class="row" style="justify-content:flex-end;">
+            <label for="error"><?php echo $error;?></label>
+            </div>
+            <div class="row" style="justify-content:flex-end;">
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj">
                     <input class="btn btn-success" type="submit" name="izmeni" id="izmeni" value="Izmeni" style="display: none;">
