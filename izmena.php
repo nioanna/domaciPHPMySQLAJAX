@@ -18,7 +18,7 @@ echo '
 <div class="row"> 
     <div class="col-sm-6"> 
         <label for="domaciTim">DomaciTim:</label> 
-        <select name="domaciTim" id="domaciTim" >';
+        <select class="form-control" name="domaciTim" id="domaciTim" >';
 $mydb2->select("tim", "*", null, null, null);
 while ($red = $mydb2->getResult()->fetch_object()) :
     if ($red->idTima == $idDomTima) {
@@ -39,7 +39,7 @@ echo '</select>
     </div>
     <div class="col-sm-6">
         <label for="gostujuciTim">GostujuciTim:</label>
-        <select name="gostujuciTim" id="gostujuciTim">';
+        <select class="form-control" name="gostujuciTim" id="gostujuciTim">';
 $mydb2->select("tim", "*", null, null, null);
 while ($red = $mydb2->getResult()->fetch_object()) :
     if ($red->idTima == $idGTima) {
@@ -62,13 +62,13 @@ echo '</select>
 <div class="row">
     <div class="col-sm-6">
         <label for="brGolDom">Broj golova domaceg tima:</label>
-        <input type="text" name="brGolDom" id="brGolDom" value="';
+        <input class="form-control" type="text" name="brGolDom" id="brGolDom" value="';
 echo $brGolDom;
 echo '">
     </div>
     <div class="col-sm-6">
         <label for="brGolGost">Broj golova gostujuceg tima:</label>
-        <input type="text" name="brGolGost" id="brGolGost" value="';
+        <input class="form-control" type="text" name="brGolGost" id="brGolGost" value="';
 echo $brGolGo;
 echo '">
     </div>
@@ -76,13 +76,13 @@ echo '">
 <div class="row">
     <div class="col-sm-4">
         <label for="grad">Grad:</label>
-        <input type="text" name="grad" id="grad" value="';
+        <input class="form-control" type="text" name="grad" id="grad" value="';
 echo  $grad;
 echo '">
     </div>
     <div class="col-sm-4">
         <label for="lig2"> Liga: </label>
-        <select name="liga-select" id="liga-select">';
+        <select class="form-control" name="liga-select" id="liga-select">';
 $mydb2->select("liga", "*", null, null, null);
 while ($red = $mydb2->getResult()->fetch_object()) :
     if ($red->idLiga == $idLig) {
@@ -103,16 +103,20 @@ echo '</select>
     </div>
     <div class="col-sm-4">
         <label for="datum">Datum:</label>
-        <input type="date"  name="datum" id="datum" value="';
+        <input class="form-control" type="date"  name="datum" id="datum" value="';
 echo date("Y-m-d", strtotime($dat));
 echo '">
     </div>
 </div>
-<div class="row">
+<div class="row style="justify-content:flex-end;>
+<div class="form-group">
     <input type="submit" name="sacuvaj" id="sacuvaj" value="Sacuvaj" style="display: none;">
-    <button type="submit" name="izmeni" id="izmeni" value="';
+    <button class="btn btn-success" type="submit" name="izmeni" id="izmeni" value="';
 echo $q;
 echo '" style="display: block;">Izmeni</button>
-    <button type="reset" name="ponistiUnos" id="ponistiUnos">Ponisti</button>
+</div>
+                <div class="form-group">
+    <button class="btn btn-danger" type="reset" name="ponistiUnos" id="ponistiUnos" onclick="skloniBlok()">Ponisti</button>
+</div>
 </div>
 </form>';

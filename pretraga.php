@@ -2,7 +2,7 @@
 include("Database.php");
 $q = strval($_GET['q']);
 $mydb = new Database("utakmice");
-$mydb->select("utakmica","*","tim","idDomacegTIma","idTima","tim.nazivTima LIKE '$q%'");
+$mydb->select("utakmica","*","tim","idDomacegTIma","idTima","tim.nazivTima LIKE '%$q%'");
 
 echo '<table class="table table-striped">
     <thread>
@@ -14,6 +14,7 @@ echo '<table class="table table-striped">
         <th scope="col">Rezultat</th>
         <th scope="col">Grad</th>
         <th scope="col">Liga</th>
+        <th scope="col">Promena</th>
     </tr>
     <tbody>';
         $mydb2 = new Database("utakmice");
@@ -36,6 +37,10 @@ echo '<table class="table table-striped">
                 $mydb2->select("liga", "*", null, null, null, "idLiga=$red->idLiga");
                 echo $mydb2->getResult()->fetch_object()->nazivLige;
                 echo '</td>
+                <td value="'; echo $red->idUtakmice; echo'"><button class="btn btn-success" type="button" name="izmeni" id="u'; echo $red->idUtakmice; echo'" value="'; echo $red->idUtakmice; echo'" onclick="izmeniUtakmicu(this.value)">Izmeni</button>
+                                        
+                <button class="btn btn-danger" type="button" name="izbrisi" id="d'; echo $red->idUtakmice; echo '" value="'; echo $red->idUtakmice; echo'" onclick="izbrisiUtakmicu(this.value)">Izbrisi</button>
+                </td>
 
             </tr>';
             endwhile;
