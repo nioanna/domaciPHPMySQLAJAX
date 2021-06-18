@@ -172,9 +172,9 @@ include("obradiZahtev.php");
     <!-- kraj dela sa tabelom -->
     <!-- forma za upit brisanja -->
     <!-- margin-left: window.I -->
-
-    <div class="del" id="del">
-        <form id="delForm" class="form-container" method="POST">
+<
+    <div class="modal" id="del">
+        <form id="delForm" method="POST">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Upozorenje!</h5>
@@ -192,13 +192,15 @@ include("obradiZahtev.php");
             </div>
         </form>
     </div>
-    <div class="modal fade" id="del">
+                  <!--          
+    <div class="modal-content" id="del">
         <form id="delForm" class="form-container" method="POST">
             <h2> Da li zelite da izbrisete utakmicu?</h2>
             <button type="submit" id="delete" name="delete" value="">Da</button>
             <button type="reset" id="ne" onchange="sakriBlok"> Ne</button>
         </form>
     </div>
+                            -->
     <!-- kraj forme sa upitom -->
 
 </body>
@@ -305,5 +307,5 @@ include("obradiZahtev.php");
         }
         
     }
-
+    
 </script>
